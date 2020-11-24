@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Brixel.Findr.API.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
-namespace Brixel.Findr
+namespace Brixel.Findr.API
 {
     public class Startup
     {
@@ -26,6 +22,20 @@ namespace Brixel.Findr
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<IFileSystem, FileSystem>();
+            services.AddScoped<IGameRepository, GameRepository>();
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc($"v1", new OpenApiInfo()
+                {
+                    Version = "v1",
+                    Title = "Brixel.Findr",
+                    Description = "Findr of Brixel"
+                });
+                options.DocumentFilter<AdditionalParametersDocumentFilter>();
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +45,10 @@ namespace Brixel.Findr
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+                c.SwaggerEndpoint($"/swagger/v1/swagger.json", "Brixel.SpaceAPI"));
 
             app.UseHttpsRedirection();
 

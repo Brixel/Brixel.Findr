@@ -4,7 +4,7 @@ using Brixel.Findr.API.Controllers;
 
 namespace Brixel.Findr.API.DTO
 {
-    internal class GameDTO
+    public class GameDTO
     {
         public Guid Id { get; set; }
         public IReadOnlyList<PlayerDTO> Players { get; set; }

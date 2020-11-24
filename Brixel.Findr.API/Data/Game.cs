@@ -2,23 +2,38 @@
 using System.Collections.Generic;
 using Brixel.Findr.API.Controllers;
 using GoogleApi.Entities.Maps.Roads.Common;
+using ProtoBuf;
 
 namespace Brixel.Findr.API.Data
 {
-    internal class Game
+    [ProtoContract]
+    public class Game
     {
+        [ProtoMember(1)]
         public Guid Id { get; set; }
-        public IReadOnlyList<Player> Players { get; set; }
-        public void Start()
+
+        [ProtoMember(20)]
+        private List<Player> _players;
+        [ProtoIgnore]
+        public IReadOnlyList<Player> Players => _players;
+
+        private Game()
         {
-            Players = new List<Player>()
+            _players = new List<Player>();
+        }
+        public static Game Create()
+        {
+            var game = new Game()
             {
-                new Player()
-                {
-                    Id = Guid.NewGuid(),
-                    Location = new Location(50.925948, 5.349982)
-                }
+                Id = Guid.NewGuid()
             };
+            game.Join();
+            return game;
+        }
+
+        public void Join()
+        {
+            _players.Add(Player.Create());
         }
     }
 }

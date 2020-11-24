@@ -1,11 +1,26 @@
 ﻿using System;
-using GoogleApi.Entities.Maps.Roads.Common;
+using ProtoBuf;
 
 namespace Brixel.Findr.API.Data
 {
-    internal class Player
+    [ProtoContract]
+    public class Player
     {
+        [ProtoMember(1)]
         public Guid Id { get; set; }
+        [ProtoMember(2)]
         public Location Location { get; set; }
+        private Player()
+        {
+            
+        }
+        public static Player Create()
+        {
+            return new Player()
+            {
+                Id = Guid.NewGuid(),
+                Location = new Location(50.925948, 5.349982)
+        };
+        }
     }
 }
