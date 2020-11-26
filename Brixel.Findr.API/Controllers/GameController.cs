@@ -18,6 +18,33 @@ namespace Brixel.Findr.API.Controllers
         {
             _repository = repository;
         }
+
+
+        [HttpGet("{id}/player/{playerId}")]
+        public async Task<CurrentGameDTO> Get(Guid id, Guid playerId)
+        {
+            var game = await _repository.OpenAsync(id);
+            var player = game.Players.SingleOrDefault(x => x.Id == playerId);
+            if (player == null)
+            {
+                return null;
+            }
+
+            return new CurrentGameDTO()
+            {
+                Id = game.Id,
+                Player = new PlayerDTO()
+                {
+                    Id = player.Id,
+                    Location = new LocationDTO()
+                    {
+                        Longitude = player.Location.Longitude,
+                        Latitude = player.Location.Latitude
+                    }
+                }
+            };
+        }
+
         [HttpPost("create")]
         public async Task<GameDTO> Create()
         {

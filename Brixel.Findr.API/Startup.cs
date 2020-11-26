@@ -22,6 +22,10 @@ namespace Brixel.Findr.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddCors(options =>
+                options.AddDefaultPolicy(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+
             services.AddScoped<IFileSystem, FileSystem>();
             services.AddScoped<IGameRepository, GameRepository>();
 
@@ -45,6 +49,8 @@ namespace Brixel.Findr.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

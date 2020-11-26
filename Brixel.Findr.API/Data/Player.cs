@@ -19,7 +19,7 @@ namespace Brixel.Findr.API.Data
             return new Player()
             {
                 Id = Guid.NewGuid(),
-                Location = new Location(50.925948, 5.349982)
+                Location = new Location( 5.349982, 50.925948)
         };
         }
     }

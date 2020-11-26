@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Brixel.Findr.API.Controllers;
-using GoogleApi.Entities.Maps.Roads.Common;
 using ProtoBuf;
 
 namespace Brixel.Findr.API.Data
