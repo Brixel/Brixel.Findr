@@ -19,10 +19,10 @@ jobs:
         dotnet-version: 3.1.301
     - name: Install dependencies
       working-directory: 'Brixel.Findr.API'
-      run: dotnet restore  .\Brixel.Findr.API.csproj
+      run: dotnet restore Brixel.Findr.API.csproj
     - name: Build      
       working-directory: 'Brixel.Findr.API'
-      run: dotnet build .\Brixel.Findr.API.csproj  --configuration Release --no-restore
+      run: dotnet build Brixel.Findr.API.csproj  --configuration Release --no-restore
     - name: Test
       working-directory: 'Brixel.Findr.API'
-      run: dotnet test  .\Brixel.Findr.API.csproj --no-restore --verbosity normal
+      run: dotnet test  Brixel.Findr.API.csproj --no-restore --verbosity normal
