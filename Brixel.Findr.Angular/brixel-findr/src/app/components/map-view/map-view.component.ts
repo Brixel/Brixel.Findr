@@ -10,17 +10,20 @@ import { CurrentGameDTO } from 'src/app/app.component';
 })
 export class MapViewComponent implements OnInit {
   safeURL: any;
+  loader: Loader;
+  panorama: google.maps.StreetViewPanorama;
 
-  constructor(private sanitizer: DomSanitizer) { 
-    const loader = new Loader({
-      apiKey: "AIzaSyBPAWTfci4re7anukcM1Rgkp6b5jwE5c4Y",
+  constructor() { 
+    this.loader = new Loader({
+      apiKey: "",
       version: "weekly"
     });
   }
 
   private _currentGame: CurrentGameDTO;
   @Input() set currentGame(value: CurrentGameDTO){
-    console.log(value);
+    this._currentGame = value;
+    this.openStreetView();
   };
   get currentGame(){
     return this._currentGame;
@@ -28,6 +31,22 @@ export class MapViewComponent implements OnInit {
 
 
   ngOnInit() {
+    this.loader.load();
+  }
+
+  private openStreetView(){
+    const position = { 
+      lat: this.currentGame.player.location.latitude, 
+      lng: this.currentGame.player.location.longitude 
+    };
+    this.panorama = new google.maps.StreetViewPanorama(
+      document.getElementById("pano") as HTMLElement,
+      {
+        position: position,
+        pov: { heading: 165, pitch: 0 },
+        zoom: 1,
+      }
+    );
   }
 
 }
