@@ -1,2 +1,3 @@
+<app-game-list (joinedGame)="onGameJoined($event)"></app-game-list>
 <app-play (playClicked)="onPlayClicked($event)"></app-play>
-<app-map-view *ngIf="currentGame" [currentGame]="currentGame"></app-map-view>
+<app-map-view *ngIf="currentPlayer" [currentPlayer]="currentPlayer"></app-map-view>

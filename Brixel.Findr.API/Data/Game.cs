@@ -29,9 +29,11 @@ namespace Brixel.Findr.API.Data
             return game;
         }
 
-        public void Join()
+        public Player Join()
         {
-            _players.Add(Player.Create());
+            var player = Player.Create();
+            _players.Add(player);
+            return player;
         }
     }
 }

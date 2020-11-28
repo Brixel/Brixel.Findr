@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { GameStateStore } from 'src/app/shared/game.state.store';
 
 @Component({
   selector: 'app-play',
@@ -12,19 +13,14 @@ export class PlayComponent implements OnInit {
 
   @Output() playClicked = new EventEmitter<PlayEvent>();
 
-  constructor() { }
+  constructor(private gameStateStore: GameStateStore) { }
 
   ngOnInit() {
 
   }
 
   onPlay(){
-    const playEvent = <PlayEvent>{
-      playerId: this.playercontrol.value,
-      gameId: this.gamecontrol.value
-    }
-    console.log(playEvent);
-    this.playClicked.emit(playEvent);
+    this.gameStateStore.play(this.gamecontrol.value, this.playercontrol.value);
   }
 
 }

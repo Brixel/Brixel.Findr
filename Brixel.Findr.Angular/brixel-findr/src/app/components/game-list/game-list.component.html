@@ -1,0 +1,5 @@
+<ul *ngIf="(gameStateStore.state$ | async) as store; else elseTemplate">
+    <li *ngFor="let game of store?.gameList?.games">{{ game.id }}<button (click)="join(game.id)">Join game</button></li>
+</ul>
+<ng-template #elseTemplate>
+<p>Loading games...</p></ng-template>

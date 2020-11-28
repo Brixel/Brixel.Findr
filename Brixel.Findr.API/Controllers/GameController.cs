@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Brixel.Findr.API.Data;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Brixel.Findr.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("games")]
     public class GameController : ControllerBase
     {
         private readonly IGameRepository _repository;
@@ -19,8 +20,20 @@ namespace Brixel.Findr.API.Controllers
             _repository = repository;
         }
 
+        [HttpGet]
+        public async Task<GameListDTO> Get()
+        {
+            var games = (await _repository.ListGames()).Select(x => new GameListDTO.GameDTO()
+            {
+                Id = x.Id
+            }).ToList();
+            return new GameListDTO()
+            {
+                Games = games
+            };
+        }
 
-        [HttpGet("{id}/player/{playerId}")]
+        [HttpGet("{id}/players/{playerId}")]
         public async Task<CurrentGameDTO> Get(Guid id, Guid playerId)
         {
             var game = await _repository.OpenAsync(id);
@@ -66,25 +79,33 @@ namespace Brixel.Findr.API.Controllers
             };
         }
 
-        [HttpPost("join")]
-        public async Task<GameDTO> Join([FromBody] JoinGameDTO joinGame)
+        [HttpPost("{gameId}/join")]
+        public async Task<CurrentGameDTO> Join([FromBody] JoinGameDTO joinGame)
         {
             var game = await _repository.OpenAsync(joinGame.GameId);
-            game.Join();
+            var player = game.Join();
             await _repository.SaveAsync(game);
-            return new GameDTO()
+            return new CurrentGameDTO()
             {
                 Id = game.Id,
-                Players = game.Players.Select(p => new PlayerDTO()
-                {
-                    Id = p.Id,
+                Player = new PlayerDTO(){
+                    Id = player.Id,
                     Location = new LocationDTO()
                     {
-                        Latitude = p.Location.Latitude,
-                        Longitude = p.Location.Longitude
+                        Latitude = player.Location.Latitude,
+                        Longitude = player.Location.Longitude
                     }
-                }).ToList()
+                }
             };
+        }
+    }
+
+    public class GameListDTO
+    {
+        public IReadOnlyList<GameDTO> Games { get; set; }
+        public class GameDTO
+        {
+            public Guid Id { get; set; }
         }
     }
 }

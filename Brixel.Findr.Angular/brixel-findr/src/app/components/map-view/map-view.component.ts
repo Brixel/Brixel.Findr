@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
-import { CurrentGameDTO } from 'src/app/app.component';
+import { CurrentGameDTO } from "src/app/shared/currentgame.dto";
+import { PlayerDTO } from 'src/app/shared/player.dto';
 
 @Component({
   selector: 'app-map-view',
@@ -14,18 +15,18 @@ export class MapViewComponent implements OnInit {
 
   constructor() { 
     this.loader = new Loader({
-      apiKey: "AIzaSyBPAWTfci4re7anukcM1Rgkp6b5jwE5c4Y",
+      apiKey: "",
       version: "weekly"
     });
   }
 
-  private _currentGame: CurrentGameDTO;
-  @Input() set currentGame(value: CurrentGameDTO){
-    this._currentGame = value;
+  private _currentPlayer: PlayerDTO;
+  @Input() set currentPlayer(value: PlayerDTO){
+    this._currentPlayer = value;
     this.openStreetView();
   };
-  get currentGame(){
-    return this._currentGame;
+  get currentPlayer(){
+    return this._currentPlayer;
   }
 
 
@@ -34,8 +35,8 @@ export class MapViewComponent implements OnInit {
 
   private openStreetView(){
     const position = { 
-      lat: this.currentGame.player.location.latitude, 
-      lng: this.currentGame.player.location.longitude 
+      lat: this._currentPlayer.location.latitude, 
+      lng: this._currentPlayer.location.longitude 
     };
     
     this.loader.load().then(() => {

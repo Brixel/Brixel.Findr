@@ -1,6 +1,9 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { PlayEvent } from "./components/play/play.component";
+import { CurrentGameDTO } from './shared/currentgame.dto';
+import { GameStateStore } from './shared/game.state.store';
+import { PlayerDTO } from './shared/player.dto';
 
 @Component({
   selector: "app-root",
@@ -10,35 +13,17 @@ import { PlayEvent } from "./components/play/play.component";
 export class AppComponent {
   title = "brixel-findr";
 
-  currentGame: CurrentGameDTO;
+  currentPlayer: PlayerDTO;
 
-  constructor(private http: HttpClient) {}
+  constructor(private gameStateStore: GameStateStore) {}
 
   onPlayClicked(playEvent: PlayEvent) {
-    console.log(playEvent);
-    const httpOption  = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
+      }
+
+  onGameJoined(gameId:string){
+    if(this.gameStateStore.state.player){
+      this.currentPlayer = this.gameStateStore.state.player;
     }
-    this.http
-      .get<CurrentGameDTO>(
-        `https://localhost:5001/game/${playEvent.gameId}/player/${playEvent.playerId}`, httpOption
-      )
-      .subscribe((res) => {
-        this.currentGame = res;
-      });
   }
 }
-export interface CurrentGameDTO {
-  id: string;
-  player: PlayerDTO;
-}
-export interface PlayerDTO {
-  id: string;
-  location: LocationDTO;
-}
-export interface LocationDTO {
-  latitude: number;
-  longitude: number;
-}
+

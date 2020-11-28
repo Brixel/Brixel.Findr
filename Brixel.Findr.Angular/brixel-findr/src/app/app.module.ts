@@ -7,12 +7,14 @@ import { MapViewComponent } from './components/map-view/map-view.component';
 import { PlayComponent } from './components/play/play.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { GameListComponent } from './components/game-list/game-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapViewComponent,
-    PlayComponent
+    PlayComponent,
+    GameListComponent
   ],
   imports: [
     BrowserModule,
