@@ -30,7 +30,14 @@ Webapp allowing to join a game and playing the game.
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-### Google Maps API
+### Installing
+
+#### API
+The API is build using .NET Core 3.1. It has just the basic dependencies.
+
+#### Clients
+##### Angular
+The Angular app is running on Angular 11, so make sure you've got the correct Node.js version installed.
 You'll need an Google Maps API SDK access token that has the Javascript SDK enabled. You will also need to have Billing enabled.
 
 Please make sure to update tests as appropriate.
