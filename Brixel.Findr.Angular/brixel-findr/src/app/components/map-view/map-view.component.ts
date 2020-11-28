@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Loader } from '@googlemaps/js-api-loader';
 import { CurrentGameDTO } from 'src/app/app.component';
 
@@ -15,7 +14,7 @@ export class MapViewComponent implements OnInit {
 
   constructor() { 
     this.loader = new Loader({
-      apiKey: "",
+      apiKey: "AIzaSyBPAWTfci4re7anukcM1Rgkp6b5jwE5c4Y",
       version: "weekly"
     });
   }
@@ -31,7 +30,6 @@ export class MapViewComponent implements OnInit {
 
 
   ngOnInit() {
-    this.loader.load();
   }
 
   private openStreetView(){
@@ -39,14 +37,21 @@ export class MapViewComponent implements OnInit {
       lat: this.currentGame.player.location.latitude, 
       lng: this.currentGame.player.location.longitude 
     };
-    this.panorama = new google.maps.StreetViewPanorama(
-      document.getElementById("pano") as HTMLElement,
-      {
-        position: position,
-        pov: { heading: 165, pitch: 0 },
-        zoom: 1,
-      }
-    );
+    
+    this.loader.load().then(() => {
+      this.panorama = new google.maps.StreetViewPanorama(
+        document.getElementById("pano") as HTMLElement,
+        {
+          position: position,
+          pov: { heading: 165, pitch: 0 },
+          zoom: 1,
+        }
+      );
+      this.panorama.addListener("position_changed", () => {
+        const lat = this.panorama.getPosition().lat();
+        const lng = this.panorama.getPosition().lng();
+        console.log(lat, lng);
+      });
+    });
   }
-
 }
