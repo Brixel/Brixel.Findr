@@ -3,6 +3,16 @@
 Findr is a streetview game where two (or maybe more?) players should find each other.
 The idea is that when a player is navigating in the streetview "world", their current location is being send to the API and the other play is notified of that.
 
+## How to play
+- Create a game
+- Share the link to that game to at least one other player
+- All players will start at a certain location in eachother vicinity (for example, in the same city)
+- Players move using the Streetview navigation indicators (the arrows)
+- The players need to find each other
+    - Since no real indication in streetview can be done, an external indicator is shown
+    - The players need to be within a range of **TBD** meters
+    - Once all players are together, they win
+
 ## API
 
 ![.NET Core Build and Deploy](https://github.com/Brixel/Brixel.Frindr/workflows/.NET%20Core%20Build%20and%20Deploy/badge.svg)
