@@ -15,6 +15,7 @@ The application consists of a simple Game API managing the game state including 
 ## Clients
 
 ![Angular Build and Deploy](https://github.com/Brixel/Brixel.Frindr/workflows/Angular%20Build%20and%20Deploy/badge.svg)
+
 Next to the API, the following end-user applications are available:
 - Angular app
 Webapp allowing to join a game and playing the game.
