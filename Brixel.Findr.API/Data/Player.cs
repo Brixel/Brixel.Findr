@@ -22,5 +22,10 @@ namespace Brixel.Findr.API.Data
                 Location = new Location( 5.349982, 50.925948)
         };
         }
+
+        public void MoveTo(in double latitude, in double location)
+        {
+            Location = new Location(location, latitude);
+        }
     }
 }

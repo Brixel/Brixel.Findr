@@ -98,6 +98,36 @@ namespace Brixel.Findr.API.Controllers
                 }
             };
         }
+
+        [HttpPost("{gameId}/players/{playerId}/move")]
+        public async Task<CurrentGameDTO> Move([FromBody] MovePlayerRequestDTO movePlayerRequest)
+        {
+
+            var game = await _repository.OpenAsync(movePlayerRequest.GameId);
+            var player = game.MovePlayer(movePlayerRequest.PlayerId, movePlayerRequest.Location.Latitude,
+                movePlayerRequest.Location.Longitude);
+            await _repository.SaveAsync(game);
+            return new CurrentGameDTO() {
+                Id = game.Id,
+                Player = new PlayerDTO()
+                {
+                    Id = player.Id,
+                    Location = new LocationDTO()
+                    {
+                        Latitude = player.Location.Latitude,
+                        Longitude = player.Location.Longitude
+                    }
+                }
+            };
+
+        }
+    }
+
+    public class MovePlayerRequestDTO
+    {
+        public Guid GameId { get; set; }
+        public Guid PlayerId { get; set; }
+        public LocationDTO Location { get; set; }
     }
 
     public class GameListDTO

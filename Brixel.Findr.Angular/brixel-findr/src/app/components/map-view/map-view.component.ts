@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { CurrentGameDTO } from "src/app/shared/currentgame.dto";
+import { GameStateStore } from 'src/app/shared/game.state.store';
 import { PlayerDTO } from 'src/app/shared/player.dto';
 
 @Component({
@@ -13,11 +14,12 @@ export class MapViewComponent implements OnInit {
   loader: Loader;
   panorama: google.maps.StreetViewPanorama;
 
-  constructor() { 
+  constructor(private gameStateStore: GameStateStore) { 
     this.loader = new Loader({
       apiKey: "",
       version: "weekly"
     });
+    
   }
 
   private _currentPlayer: PlayerDTO;
@@ -31,6 +33,32 @@ export class MapViewComponent implements OnInit {
 
 
   ngOnInit() {
+
+    this.loader.load().then(() => {
+      console.log('loader started')
+      this.panorama = new google.maps.StreetViewPanorama(
+        document.getElementById("pano") as HTMLElement,
+        
+      );
+      if(this._currentPlayer){
+
+        const position = { 
+          lat: this._currentPlayer.location.latitude, 
+          lng: this._currentPlayer.location.longitude 
+        };
+        console.log(this.panorama);
+        this.panorama.setPosition(position);
+      }
+      this.panorama.addListener("position_changed", () => {
+        
+        const lat = this.panorama.getPosition().lat();
+        const lng = this.panorama.getPosition().lng();
+        if(this.currentPlayer.location.latitude !== lat && this.currentPlayer.location.longitude !== lng){
+          this.gameStateStore.move(lat, lng);
+        }
+        
+      });
+    });
   }
 
   private openStreetView(){
@@ -38,21 +66,9 @@ export class MapViewComponent implements OnInit {
       lat: this._currentPlayer.location.latitude, 
       lng: this._currentPlayer.location.longitude 
     };
+    if(this.panorama){
+      this.panorama.setPosition(position);
+    }
     
-    this.loader.load().then(() => {
-      this.panorama = new google.maps.StreetViewPanorama(
-        document.getElementById("pano") as HTMLElement,
-        {
-          position: position,
-          pov: { heading: 165, pitch: 0 },
-          zoom: 1,
-        }
-      );
-      this.panorama.addListener("position_changed", () => {
-        const lat = this.panorama.getPosition().lat();
-        const lng = this.panorama.getPosition().lng();
-        console.log(lat, lng);
-      });
-    });
   }
 }

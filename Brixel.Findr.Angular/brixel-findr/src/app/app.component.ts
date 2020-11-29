@@ -15,7 +15,7 @@ export class AppComponent {
 
   currentPlayer: PlayerDTO;
 
-  constructor(private gameStateStore: GameStateStore) {}
+  constructor(public gameStateStore: GameStateStore) {}
 
   onPlayClicked(playEvent: PlayEvent) {
       }

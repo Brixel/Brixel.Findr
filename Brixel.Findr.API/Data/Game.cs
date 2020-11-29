@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ProtoBuf;
 
 namespace Brixel.Findr.API.Data
@@ -34,6 +35,19 @@ namespace Brixel.Findr.API.Data
             var player = Player.Create();
             _players.Add(player);
             return player;
+        }
+
+        public Player MovePlayer(Guid playerId, in double latitude, in double longitude)
+        {
+            var player = _players.SingleOrDefault(x => x.Id == playerId);
+            player.MoveTo(latitude, longitude);
+            CalculateDistanceBetweenPlayers(player.Id);
+            return player;
+        }
+
+        private void CalculateDistanceBetweenPlayers(Guid playerId)
+        {
+            var otherPlayers = _players.Where(x => x.Id != playerId);
         }
     }
 }

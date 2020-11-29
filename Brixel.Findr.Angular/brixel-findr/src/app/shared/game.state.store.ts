@@ -44,7 +44,12 @@ export class GameStateStore extends Store<GameState> {
     }
 
     move(latitude: number, longitude: number){
-
+        this.gameProxy.move(this.state.gameId, this.state.player.id, latitude, longitude).pipe(tap(res => {
+            this.setState({
+                ...this.state,
+                player: res.player
+            })
+        })).subscribe();
     }
 
     listGames() {
@@ -52,8 +57,7 @@ export class GameStateStore extends Store<GameState> {
             this.setState({
                 ...this.state,
                 gameList: res
-            })
-            console.log(this.state);
+            });
         })).subscribe();
       }
 }
