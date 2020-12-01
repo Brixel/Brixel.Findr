@@ -1,5 +1,6 @@
-<ul *ngIf="(gameStateStore.state$ | async) as store; else elseTemplate">
-    <li *ngFor="let game of store?.gameList?.games">{{ game.id }}<button (click)="join(game.id)">Join game</button></li>
-</ul>
+<mat-list *ngIf="(gameStateStore.state$ | async) as store; else elseTemplate">
+    <mat-list-item *ngFor="let game of store?.gameList?.games">{{ game.id }}<button mat-stroked-button color="primary" (click)="join(game.id)">Join game</button></mat-list-item>
+</mat-list>
 <ng-template #elseTemplate>
-<p>Loading games...</p></ng-template>
+    <p>Loading games...</p>
+</ng-template>

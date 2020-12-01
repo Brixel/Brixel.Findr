@@ -9,6 +9,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { GameListComponent } from './components/game-list/game-list.component';
 import { CreateGameComponent } from './components/create-game/create-game.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from  '@angular/material/list';
+import { MatInputModule } from  '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -16,13 +20,18 @@ import { CreateGameComponent } from './components/create-game/create-game.compon
     MapViewComponent,
     PlayComponent,
     GameListComponent,
-    CreateGameComponent
+    CreateGameComponent,
+    
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatListModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
