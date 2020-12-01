@@ -23,9 +23,9 @@ namespace Brixel.Findr.API.Data
         };
         }
 
-        public void MoveTo(in double latitude, in double location)
+        public void MoveTo(in double latitude, in double longitude)
         {
-            Location = new Location(location, latitude);
+            Location = new Location(longitude, latitude);
         }
     }
 }
