@@ -114,7 +114,7 @@ namespace Brixel.Findr.API.Controllers
         {
 
             var game = await _repository.OpenAsync(movePlayerRequest.GameId);
-
+            
             var player = game.MovePlayer(movePlayerRequest.PlayerId, movePlayerRequest.Location.Latitude,
                 movePlayerRequest.Location.Longitude);
 

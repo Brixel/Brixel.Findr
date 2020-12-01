@@ -40,8 +40,11 @@ namespace Brixel.Findr.API.Data
         public Player MovePlayer(Guid playerId, in double latitude, in double longitude)
         {
             var player = _players.SingleOrDefault(x => x.Id == playerId);
+
             player.MoveTo(latitude, longitude);
+
             CalculateDistanceBetweenPlayers(player.Id);
+
             return player;
         }
 
