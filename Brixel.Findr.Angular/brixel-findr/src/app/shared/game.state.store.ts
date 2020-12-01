@@ -8,14 +8,20 @@ import { GameState } from "./game.state";
 @Injectable({ providedIn: 'root' })
 export class GameStateStore extends Store<GameState> {
     
-    
-    /**
-     *
-     */
     constructor(private gameProxy: GameProxy) {
-        super(new GameState());
-        
+        super(new GameState());        
     }
+
+    create(){
+        return this.gameProxy.create().pipe(tap((res => {
+            this.setState({
+                ...this.state,
+                gameId: res.id,
+                player: res.player
+            })
+        })))
+    }
+
     join(gameId: string) {
         this.setState({
             ...this.state,

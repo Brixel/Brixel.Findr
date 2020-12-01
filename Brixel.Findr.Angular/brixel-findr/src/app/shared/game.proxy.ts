@@ -12,6 +12,10 @@ export class GameProxy{
     constructor(private api: ApiService) {
         
     }
+
+    create(): Observable<CurrentGameDTO>{
+        return this.api.post(`games/create`).pipe(res => res);
+    }
     join(gameId: string) :Observable<CurrentGameDTO>{
         const body = { gameId: gameId}
         return this.api.post(`games/${gameId}/join`, body).pipe(res => res);

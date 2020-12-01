@@ -21,7 +21,7 @@ export class ApiService {
         return this.httpClient.get(`${this.baseURL}/${url}`, this.httpOptions);
     }
 
-    post(url: string, body: any):Observable<any> {
+    post(url: string, body: any = null):Observable<any> {
         return this.httpClient.post(`${this.baseURL}/${url}`, body, this.httpOptions);
     }
 }

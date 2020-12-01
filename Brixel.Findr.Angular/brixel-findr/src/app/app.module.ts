@@ -8,13 +8,15 @@ import { PlayComponent } from './components/play/play.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { GameListComponent } from './components/game-list/game-list.component';
+import { CreateGameComponent } from './components/create-game/create-game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapViewComponent,
     PlayComponent,
-    GameListComponent
+    GameListComponent,
+    CreateGameComponent
   ],
   imports: [
     BrowserModule,
