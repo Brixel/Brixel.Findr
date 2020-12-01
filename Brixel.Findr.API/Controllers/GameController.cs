@@ -23,7 +23,7 @@ namespace Brixel.Findr.API.Controllers
         [HttpGet]
         public async Task<GameListDTO> Get()
         {
-            var games = (await _repository.ListGames()).Select(x => new GameListDTO.GameDTO()
+            var games = (await _repository.ListGames()).Select(x => new GameSummaryDTO()
             {
                 Id = x.Id
             }).ToList();
@@ -62,7 +62,7 @@ namespace Brixel.Findr.API.Controllers
         public async Task<GameDTO> Create()
         {
             var game = Game.Create();
-            
+
             await _repository.SaveAsync(game);
             return new GameDTO()
             {
@@ -88,7 +88,8 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentGameDTO()
             {
                 Id = game.Id,
-                Player = new PlayerDTO(){
+                Player = new PlayerDTO()
+                {
                     Id = player.Id,
                     Location = new LocationDTO()
                     {
@@ -107,7 +108,8 @@ namespace Brixel.Findr.API.Controllers
             var player = game.MovePlayer(movePlayerRequest.PlayerId, movePlayerRequest.Location.Latitude,
                 movePlayerRequest.Location.Longitude);
             await _repository.SaveAsync(game);
-            return new CurrentGameDTO() {
+            return new CurrentGameDTO()
+            {
                 Id = game.Id,
                 Player = new PlayerDTO()
                 {
@@ -120,22 +122,6 @@ namespace Brixel.Findr.API.Controllers
                 }
             };
 
-        }
-    }
-
-    public class MovePlayerRequestDTO
-    {
-        public Guid GameId { get; set; }
-        public Guid PlayerId { get; set; }
-        public LocationDTO Location { get; set; }
-    }
-
-    public class GameListDTO
-    {
-        public IReadOnlyList<GameDTO> Games { get; set; }
-        public class GameDTO
-        {
-            public Guid Id { get; set; }
         }
     }
 }
