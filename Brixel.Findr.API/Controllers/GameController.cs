@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Brixel.Findr.API.Data;
@@ -37,7 +36,9 @@ namespace Brixel.Findr.API.Controllers
         public async Task<CurrentGameDTO> Get(Guid id, Guid playerId)
         {
             var game = await _repository.OpenAsync(id);
+
             var player = game.Players.SingleOrDefault(x => x.Id == playerId);
+
             if (player == null)
             {
                 return null;
@@ -59,23 +60,25 @@ namespace Brixel.Findr.API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<GameDTO> Create()
+        public async Task<CurrentGameDTO> Create()
         {
             var game = Game.Create();
 
             await _repository.SaveAsync(game);
-            return new GameDTO()
+
+            var player = game.Players.Single();
+            return new CurrentGameDTO()
             {
                 Id = game.Id,
-                Players = game.Players.Select(p => new PlayerDTO()
+                Player = new PlayerDTO()
                 {
-                    Id = p.Id,
+                    Id = player.Id,
                     Location = new LocationDTO()
                     {
-                        Latitude = p.Location.Latitude,
-                        Longitude = p.Location.Longitude
+                        Latitude = player.Location.Latitude,
+                        Longitude = player.Location.Longitude
                     }
-                }).ToList()
+                }
             };
         }
 
@@ -83,8 +86,11 @@ namespace Brixel.Findr.API.Controllers
         public async Task<CurrentGameDTO> Join([FromBody] JoinGameDTO joinGame)
         {
             var game = await _repository.OpenAsync(joinGame.GameId);
+
             var player = game.Join();
+
             await _repository.SaveAsync(game);
+
             return new CurrentGameDTO()
             {
                 Id = game.Id,
@@ -105,8 +111,10 @@ namespace Brixel.Findr.API.Controllers
         {
 
             var game = await _repository.OpenAsync(movePlayerRequest.GameId);
+
             var player = game.MovePlayer(movePlayerRequest.PlayerId, movePlayerRequest.Location.Latitude,
                 movePlayerRequest.Location.Longitude);
+
             await _repository.SaveAsync(game);
             return new CurrentGameDTO()
             {

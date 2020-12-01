@@ -1,3 +1,4 @@
+<app-create-game></app-create-game>
 <app-game-list (joinedGame)="onGameJoined($event)"></app-game-list>
 <app-play (playClicked)="onPlayClicked($event)"></app-play>
 <app-map-view *ngIf="gameStateStore.state.player" [currentPlayer]="gameStateStore.state.player"></app-map-view>

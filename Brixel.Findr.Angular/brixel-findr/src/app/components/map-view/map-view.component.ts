@@ -35,7 +35,6 @@ export class MapViewComponent implements OnInit {
   ngOnInit() {
 
     this.loader.load().then(() => {
-      console.log('loader started')
       this.panorama = new google.maps.StreetViewPanorama(
         document.getElementById("pano") as HTMLElement,
         
@@ -46,7 +45,6 @@ export class MapViewComponent implements OnInit {
           lat: this._currentPlayer.location.latitude, 
           lng: this._currentPlayer.location.longitude 
         };
-        console.log(this.panorama);
         this.panorama.setPosition(position);
       }
       this.panorama.addListener("position_changed", () => {
