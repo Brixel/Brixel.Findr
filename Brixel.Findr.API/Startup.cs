@@ -54,7 +54,7 @@ namespace Brixel.Findr.API
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
-                c.SwaggerEndpoint($"/swagger/v1/swagger.json", "Brixel.SpaceAPI"));
+                c.SwaggerEndpoint($"/swagger/v1/swagger.json", "Brixel.FindrApi"));
 
             app.UseHttpsRedirection();
 

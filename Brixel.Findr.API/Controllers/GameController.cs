@@ -22,14 +22,10 @@ namespace Brixel.Findr.API.Controllers
         [HttpGet]
         public async Task<GameListDTO> Get()
         {
-            var games = 
-                (await _repository.ListGames())
-                    .Select(x => new GameListDTO.GameDTO()
-                {
-                    Id = x.Id
-                })
-                .ToList();
-
+            var games = (await _repository.ListGames()).Select(x => new GameSummaryDTO()
+            {
+                Id = x.Id
+            }).ToList();
             return new GameListDTO()
             {
                 Games = games
@@ -98,7 +94,8 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentGameDTO()
             {
                 Id = game.Id,
-                Player = new PlayerDTO(){
+                Player = new PlayerDTO()
+                {
                     Id = player.Id,
                     Location = new LocationDTO()
                     {
@@ -114,13 +111,13 @@ namespace Brixel.Findr.API.Controllers
         {
 
             var game = await _repository.OpenAsync(movePlayerRequest.GameId);
-            
+
             var player = game.MovePlayer(movePlayerRequest.PlayerId, movePlayerRequest.Location.Latitude,
                 movePlayerRequest.Location.Longitude);
 
             await _repository.SaveAsync(game);
-
-            return new CurrentGameDTO() {
+            return new CurrentGameDTO()
+            {
                 Id = game.Id,
                 Player = new PlayerDTO()
                 {
