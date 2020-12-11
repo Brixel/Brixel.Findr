@@ -3,8 +3,9 @@ import { CurrentGameDTO } from "./currentgame.dto";
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
 import { GameListDTO } from './gamelist.dto';
-import { MovePlayerRequestDTO } from './player.dto';
+import { MovePlayerRequestDTO } from "./moveplayerrequest.dto";
 import { LocationDTO } from './location.dto';
+import { CurrentPlayersDTO } from "./currentplayers.dto";
 
 @Injectable({providedIn: "root"})
 export class GameProxy{
@@ -40,6 +41,10 @@ export class GameProxy{
 
     listGames(): Observable<GameListDTO>{
         return this.api.get(`games`).pipe((res => res));
+    }
+
+    listPlayers(gameId: string, currentPlayerId: string): Observable<CurrentPlayersDTO>{
+        return this.api.get(`games/${gameId}/distance/${currentPlayerId}`).pipe((res => res));
     }
 }
 

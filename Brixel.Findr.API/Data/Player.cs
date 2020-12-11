@@ -3,6 +3,8 @@ using ProtoBuf;
 
 namespace Brixel.Findr.API.Data
 {
+    using Geolocation;
+
     [ProtoContract]
     public class Player
     {
@@ -26,6 +28,15 @@ namespace Brixel.Findr.API.Data
         public void MoveTo(in double latitude, in double longitude)
         {
             Location = new Location(longitude, latitude);
+        }
+
+        public double DistanceFrom(in double latitude, in double longitude)
+        {
+            var currentPlayersCoordinates = new Coordinate(Location.Latitude, Location.Longitude);
+            var originCoordinate = new Coordinate(latitude, longitude);
+            var distance =
+                GeoCalculator.GetDistance(originCoordinate, currentPlayersCoordinates, 0, DistanceUnit.Meters);
+            return distance;
         }
     }
 }

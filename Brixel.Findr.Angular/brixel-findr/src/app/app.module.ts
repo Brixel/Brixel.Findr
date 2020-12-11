@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from  '@angular/material/list';
 import { MatInputModule } from  '@angular/material/input';
+import { PlayersOverviewComponent } from './components/players-overview/players-overview.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MatInputModule } from  '@angular/material/input';
     PlayComponent,
     GameListComponent,
     CreateGameComponent,
+    PlayersOverviewComponent,
     
   ],
   imports: [

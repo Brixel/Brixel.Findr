@@ -17,7 +17,7 @@ export class GameStateStore extends Store<GameState> {
             this.setState({
                 ...this.state,
                 gameId: res.id,
-                player: res.player
+                player: res.currentPlayer
             })
         })))
     }
@@ -31,7 +31,7 @@ export class GameStateStore extends Store<GameState> {
             this.setState({
                 ...this.state,
                 gameId: res.id,
-                player: res.player
+                player: res.currentPlayer
             })
         })));
     }
@@ -44,8 +44,8 @@ export class GameStateStore extends Store<GameState> {
         this.gameProxy.play(gameId, playerId).pipe(tap(res => {
             this.setState({
                 ...this.state,
-                player: res.player
-            })
+                player: res.currentPlayer
+            });
         })).subscribe();
     }
 
@@ -53,8 +53,11 @@ export class GameStateStore extends Store<GameState> {
         this.gameProxy.move(this.state.gameId, this.state.player.id, latitude, longitude).pipe(tap(res => {
             this.setState({
                 ...this.state,
-                player: res.player
-            })
+                player: res.currentPlayer
+            });
+            
+            
+            this.listPlayers(this.state.gameId, this.state.player.id).subscribe();
         })).subscribe();
     }
 
@@ -66,4 +69,12 @@ export class GameStateStore extends Store<GameState> {
             });
         })).subscribe();
       }
+    listPlayers(gameId: string, currentPlayerId: string){
+        return this.gameProxy.listPlayers(gameId, currentPlayerId).pipe(tap(res => {
+            this.setState({
+                ...this.state,
+                players: res.players
+            })
+        }))
+    }
 }
