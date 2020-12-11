@@ -19,7 +19,7 @@ namespace Brixel.Findr.API.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
+        [HttpGet()]
         public async Task<GameListDTO> Get()
         {
             var games = (await _repository.ListGames()).Select(x => new GameSummaryDTO()
@@ -29,6 +29,23 @@ namespace Brixel.Findr.API.Controllers
             return new GameListDTO()
             {
                 Games = games
+            };
+        }
+
+        [HttpGet("{gameId}/distance/{currentPlayerId}")]
+        public async Task<CurrentPlayersDTO> GetPlayers(Guid gameId, Guid currentPlayerId)
+        {
+            var game = await _repository.OpenAsync(gameId);
+            var currentPlayer = game.Players.SingleOrDefault(x => x.Id == currentPlayerId);
+            return new CurrentPlayersDTO()
+            {
+                GameId = game.Id,
+                Players = game.Players.Select(p => new PlayerDTO()
+                {
+                    Id = p.Id,
+                    IsSelf = p.Id == currentPlayer.Id,
+                    Distance = p.DistanceFrom(currentPlayer.Location.Latitude, currentPlayer.Location.Longitude)
+                }).ToList()
             };
         }
 
@@ -47,7 +64,7 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentGameDTO()
             {
                 Id = game.Id,
-                Player = new PlayerDTO()
+                CurrentPlayer = new DTO.CurrentPlayerDTO()
                 {
                     Id = player.Id,
                     Location = new LocationDTO()
@@ -70,7 +87,7 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentGameDTO()
             {
                 Id = game.Id,
-                Player = new PlayerDTO()
+                CurrentPlayer = new DTO.CurrentPlayerDTO()
                 {
                     Id = player.Id,
                     Location = new LocationDTO()
@@ -94,7 +111,7 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentGameDTO()
             {
                 Id = game.Id,
-                Player = new PlayerDTO()
+                CurrentPlayer = new DTO.CurrentPlayerDTO()
                 {
                     Id = player.Id,
                     Location = new LocationDTO()
@@ -119,7 +136,7 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentGameDTO()
             {
                 Id = game.Id,
-                Player = new PlayerDTO()
+                CurrentPlayer = new DTO.CurrentPlayerDTO()
                 {
                     Id = player.Id,
                     Location = new LocationDTO()

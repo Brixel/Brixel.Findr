@@ -1,0 +1,3 @@
+<ol>
+    <li *ngFor="let player of players">{{ player.id }} is at {{ player.distance }} meters <span *ngIf="player.isSelf">(This is you)</span></li>
+</ol>

@@ -2,7 +2,7 @@
 
 namespace Brixel.Findr.API.DTO
 {
-    public class PlayerDTO
+    public class CurrentPlayerDTO
     {
         public Guid Id { get; set; }
 

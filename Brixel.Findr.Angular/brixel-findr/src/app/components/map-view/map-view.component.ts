@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
 import { CurrentGameDTO } from "src/app/shared/currentgame.dto";
 import { GameStateStore } from 'src/app/shared/game.state.store';
-import { PlayerDTO } from 'src/app/shared/player.dto';
+import { CurrentPlayerDTO } from "src/app/shared/currentplayer.dto";
 
 @Component({
   selector: 'app-map-view',
@@ -22,8 +22,8 @@ export class MapViewComponent implements OnInit {
     
   }
 
-  private _currentPlayer: PlayerDTO;
-  @Input() set currentPlayer(value: PlayerDTO){
+  private _currentPlayer: CurrentPlayerDTO;
+  @Input() set currentPlayer(value: CurrentPlayerDTO){
     this._currentPlayer = value;
     this.openStreetView();
   };

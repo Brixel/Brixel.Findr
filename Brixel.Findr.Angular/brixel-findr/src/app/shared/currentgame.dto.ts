@@ -1,6 +1,6 @@
-import { PlayerDTO } from "./player.dto";
+import { CurrentPlayerDTO } from "./currentplayer.dto";
 
 export interface CurrentGameDTO {
   id: string;
-  player: PlayerDTO;
+  currentPlayer: CurrentPlayerDTO;
 }

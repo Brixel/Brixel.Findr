@@ -3,7 +3,7 @@ import { Component } from "@angular/core";
 import { PlayEvent } from "./components/play/play.component";
 import { CurrentGameDTO } from './shared/currentgame.dto';
 import { GameStateStore } from './shared/game.state.store';
-import { PlayerDTO } from './shared/player.dto';
+import { CurrentPlayerDTO } from "./shared/currentplayer.dto";
 
 @Component({
   selector: "app-root",
@@ -13,7 +13,7 @@ import { PlayerDTO } from './shared/player.dto';
 export class AppComponent {
   title = "brixel-findr";
 
-  currentPlayer: PlayerDTO;
+  currentPlayer: CurrentPlayerDTO;
 
   constructor(public gameStateStore: GameStateStore) {}
 
@@ -21,9 +21,7 @@ export class AppComponent {
       }
 
   onGameJoined(gameId:string){
-    if(this.gameStateStore.state.player){
-      this.currentPlayer = this.gameStateStore.state.player;
-    }
+    
   }
 }
 

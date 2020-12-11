@@ -43,7 +43,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ### Installing
 
 #### API
-The API is build using .NET Core 3.1. It has just the basic dependencies.
+The API is build using .NET Core 3.1. It uses the default .NET Core 3.1 dependencies, but also these additionals:
+- https://github.com/scottschluer/geolocation
 
 #### Clients
 ##### Angular
