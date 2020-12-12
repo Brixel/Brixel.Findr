@@ -8,6 +8,7 @@ import { PlayerDTO } from 'src/app/shared/player.dto';
 })
 export class PlayersOverviewComponent implements OnInit {
   @Input() players: PlayerDTO[];
+  @Input() gameId :string;
   constructor() { }
 
   ngOnInit(): void {
