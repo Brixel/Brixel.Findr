@@ -15,7 +15,7 @@ export class MapViewComponent implements OnInit {
   loader: Loader;
   panorama: google.maps.StreetViewPanorama;
 
-  constructor(private gameStateStore: GameStateStore, private route: ActivatedRoute) {
+  constructor(public gameStateStore: GameStateStore, private route: ActivatedRoute) {
     this.loader = new Loader({
       apiKey: "",
       version: "weekly"
