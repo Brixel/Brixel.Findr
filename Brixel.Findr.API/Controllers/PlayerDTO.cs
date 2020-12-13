@@ -5,7 +5,7 @@
     public class PlayerDTO
     {
         public Guid Id { get; set; }
-        public bool IsSelf { get; set; }
         public double Distance { get; set; }
+        public string Color { get; set; }
     }
 }

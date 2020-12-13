@@ -40,10 +40,10 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentPlayersDTO()
             {
                 GameId = game.Id,
-                Players = game.Players.Select(p => new PlayerDTO()
+                Players = game.Players.Where(x => x.Id != currentPlayerId).Select(p => new PlayerDTO()
                 {
                     Id = p.Id,
-                    IsSelf = p.Id == currentPlayer.Id,
+                    Color = p.Color,
                     Distance = p.DistanceFrom(currentPlayer.Location.Latitude, currentPlayer.Location.Longitude)
                 }).ToList()
             };

@@ -23,7 +23,7 @@ export class GameListComponent implements OnInit {
 
   join(gameId: string){
     this.gameStateStore.join(gameId).pipe(tap((res => {
-      this.router.navigateByUrl(`game/${res.id}`)
+      this.router.navigateByUrl(`game/${res.id}/player/${res.currentPlayer.id}`)
     }))).subscribe();
   }
 
