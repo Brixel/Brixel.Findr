@@ -22,12 +22,12 @@ jobs:
       id: docker_build_push_api
       uses: docker/build-push-action@v2
       with:
-        repository: bwouters/findr-api:$(date +%s)
+        repository: bwouters/findr-api
         tag_with_ref: true
         context: Brixel.Findr.API
         file: Brixel.Findr.API/Dockerfile
         push: true
-        tags: bwouters/findr-api:$(date +%s)
+        tags: bwouters/findr-api:latest
     - name: Image digest
       run: echo ${{ steps.docker_build_push_api.outputs.digest }}
         
@@ -40,6 +40,6 @@ jobs:
         context: Brixel.Findr.Angular/brixel-findr
         file: Brixel.Findr.Angular/brixel-findr/Dockerfile
         push: true
-        tags: bwouters/findr-angular:$(date +%s)      
+        tags: bwouters/findr-angular:latest
     - name: Image digest
       run: echo ${{ steps.docker_build_push_angular.outputs.digest }}
