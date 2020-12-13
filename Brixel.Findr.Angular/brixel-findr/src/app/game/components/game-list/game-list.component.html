@@ -1,0 +1,7 @@
+<h1>Available games</h1>
+<mat-action-list *ngIf="(gameStateStore.state$ | async) as store; else elseTemplate">
+        <button mat-list-item color="primary" (click)="join(game.id)" *ngFor="let game of store?.gameList?.games">Join game {{ game.id }}</button>
+</mat-action-list>
+<ng-template #elseTemplate>
+    <p>Loading games...</p>
+</ng-template>

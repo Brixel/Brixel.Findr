@@ -1,0 +1,10 @@
+<mat-toolbar color="primary"><span>Findr</span>
+    <span class="example-spacer"></span>
+    <app-create-game *ngIf="!gameStateStore.state.player"></app-create-game>
+</mat-toolbar>
+<router-outlet></router-outlet>
+
+<!--<app-play *ngIf="!gameStateStore.state.player" (playClicked)="onPlayClicked($event)"></app-play>
+<app-map-view *ngIf="gameStateStore.state.player" ></app-map-view>
+<app-players-overview *ngIf="gameStateStore.state.player" [gameId]="gameStateStore.state.gameId"
+    [players]="gameStateStore.state.players"></app-players-overview> -->
