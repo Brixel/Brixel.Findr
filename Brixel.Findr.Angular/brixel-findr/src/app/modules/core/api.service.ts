@@ -1,20 +1,21 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ConfigurationService } from './configuration.service';
 
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-    
-    baseURL = 'https://localhost:5001';
 
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'
         })
     };
+    baseURL:string;
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private configurationService: ConfigurationService) {
+        this.baseURL = this.configurationService.configuration.apiURL;
     }
 
     get(url: string): Observable<any> {
