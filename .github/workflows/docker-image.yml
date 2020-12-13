@@ -11,9 +11,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          
     - uses: actions/checkout@v2
     - name: Build the API Docker image
-      run: docker build Brixel.Findr.API --file Brixel.Findr.API/Dockerfile --tag bwouters/findr-api:$(date +%s)
-    - uses: actions/checkout@v2
-    - name: Build the Webapp Docker image
-      run: docker build Brixel.Findr.Angular/brixel-findr --file Brixel.Findr.Angular/brixel-findr/Dockerfile --tag bwouters/findr-app:$(date +%s)
+      id: docker_build_push_api
+      uses: docker/build-push-action@v2
+      with:
+        repository: bwouters/findr-api:$(date +%s)
+        tag_with_ref: true
+        context: Brixel.Findr.API
+        file: Brixel.Findr.API/Dockerfile
+        push: true
+        tags: bwouters/findr-api:$(date +%s)
+    - name: Image digest
+      run: echo ${{ steps.docker_build_push_api.outputs.digest }}
+        
+    - name: Build the Angular Docker image
+      id: docker_build_push_angular
+      uses: docker/build-push-action@v2
+      with:
+        repository: bwouters/findr-angular
+        tag_with_ref: true
+        context: Brixel.Findr.Angular/brixel-findr
+        file: Brixel.Findr.Angular/brixel-findr/Dockerfile
+        push: true
+        tags: bwouters/findr-angular:$(date +%s)      
+    - name: Image digest
+      run: echo ${{ steps.docker_build_push_angular.outputs.digest }}
