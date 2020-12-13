@@ -42,12 +42,28 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ### Installing
 
+#### General
+
+- `git clone https://github.com/Brixel/Brixel.Findr.git`
+
+
 #### API
+
+- `cd Brixel.Findr.API`
+- `dotnet watch run`
+
 The API is build using .NET Core 3.1. It uses the default .NET Core 3.1 dependencies, but also these additionals:
 - https://github.com/scottschluer/geolocation
 
+
 #### Clients
 ##### Angular
+
+- `cd Brixel.Findr.Angular`
+- `cd brixel-findr`
+- `npm install`
+- `npm start`
+
 The Angular app is running on Angular 11, so make sure you've got the correct Node.js version installed.
 You'll need an Google Maps API SDK access token that has the Javascript SDK enabled. You will also need to have Billing enabled.
 
