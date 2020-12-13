@@ -14,7 +14,4 @@ export class PlayersOverviewComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  generateURL(playerId: string){
-    this.clipboard.copy(`http://localhost:4200/game/${this.gameId}/player/${playerId}`)
-  }
 }

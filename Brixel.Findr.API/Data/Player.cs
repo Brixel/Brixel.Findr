@@ -9,9 +9,13 @@ namespace Brixel.Findr.API.Data
     public class Player
     {
         [ProtoMember(1)]
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
         [ProtoMember(2)]
-        public Location Location { get; set; }
+        public Location Location { get; private set; }
+
+
+        [ProtoMember(3)]
+        public string Color { get; private set; }
         private Player()
         {
             
@@ -21,8 +25,16 @@ namespace Brixel.Findr.API.Data
             return new Player()
             {
                 Id = Guid.NewGuid(),
-                Location = new Location( 5.349982, 50.925948)
-        };
+                Location = new Location( 5.349982, 50.925948),
+                Color = GenerateRandomHexColor()
+            };
+        }
+
+        private static string GenerateRandomHexColor()
+        {
+            var random = new Random();
+            var color = $"#{random.Next(0x1000000):X6}";
+            return color;
         }
 
         public void MoveTo(in double latitude, in double longitude)
