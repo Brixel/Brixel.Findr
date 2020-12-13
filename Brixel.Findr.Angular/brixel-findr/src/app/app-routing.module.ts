@@ -1,15 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GameOverviewComponent } from './game/components/game-overview/game-overview.component';
 
-const routes: Routes = [{
-  path: '**',
-  component: GameOverviewComponent,
-  
-}];
+const routes: Routes = [];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' , enableTracing: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { GameStateStore } from '../../shared/game.state.store';
 import { GameListDTO } from '../../shared/gamelist.dto';
@@ -14,7 +15,7 @@ export class GameListComponent implements OnInit {
 
   @Output() joinedGame = new EventEmitter<string>();
 
-  constructor(public gameStateStore: GameStateStore) { }
+  constructor(public gameStateStore: GameStateStore, private router: Router) { }
 
   ngOnInit(): void {
     this.gameStateStore.listGames();
@@ -22,7 +23,7 @@ export class GameListComponent implements OnInit {
 
   join(gameId: string){
     this.gameStateStore.join(gameId).pipe(tap((res => {
-      this.joinedGame.emit(res.id);
+      this.router.navigateByUrl(`game/${res.id}`)
     }))).subscribe();
   }
 

@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
+import { tap } from 'rxjs/operators';
 import { CurrentPlayerDTO } from '../../shared/currentplayer.dto';
 import { GameStateStore } from '../../shared/game.state.store';
 
@@ -13,59 +15,62 @@ export class MapViewComponent implements OnInit {
   loader: Loader;
   panorama: google.maps.StreetViewPanorama;
 
-  constructor(private gameStateStore: GameStateStore) { 
+  constructor(private gameStateStore: GameStateStore, private route: ActivatedRoute) {
     this.loader = new Loader({
       apiKey: "",
       version: "weekly"
     });
-    
+
   }
 
-  private _currentPlayer: CurrentPlayerDTO;
-  @Input() set currentPlayer(value: CurrentPlayerDTO){
-    this._currentPlayer = value;
-    this.openStreetView();
-  };
-  get currentPlayer(){
-    return this._currentPlayer;
-  }
+  currentPlayer: CurrentPlayerDTO;
 
 
   ngOnInit() {
+    const gameId = this.route.snapshot.paramMap.get('gameId');
+    const playerId = this.route.snapshot.paramMap.get('playerId');
+    if (!playerId) {
+      console.log('Popup new-or-existing-player account')
+    }
+    if (gameId && playerId)
+      this.gameStateStore.play(gameId, playerId).pipe(tap((currentGame => {
+        this.currentPlayer = currentGame.currentPlayer;
+        this.openStreetView();
+      }))).subscribe();
 
     this.loader.load().then(() => {
       this.panorama = new google.maps.StreetViewPanorama(
         document.getElementById("pano") as HTMLElement,
-        
-      );
-      if(this._currentPlayer){
 
-        const position = { 
-          lat: this._currentPlayer.location.latitude, 
-          lng: this._currentPlayer.location.longitude 
+      );
+      if (this.currentPlayer) {
+
+        const position = {
+          lat: this.currentPlayer.location.latitude,
+          lng: this.currentPlayer.location.longitude
         };
         this.panorama.setPosition(position);
       }
       this.panorama.addListener("position_changed", () => {
-        
+
         const lat = this.panorama.getPosition().lat();
         const lng = this.panorama.getPosition().lng();
-        if(this.currentPlayer.location.latitude !== lat && this.currentPlayer.location.longitude !== lng){
+        if (this.currentPlayer.location.latitude !== lat && this.currentPlayer.location.longitude !== lng) {
           this.gameStateStore.move(lat, lng);
         }
-        
+
       });
     });
   }
 
-  private openStreetView(){
-    const position = { 
-      lat: this._currentPlayer.location.latitude, 
-      lng: this._currentPlayer.location.longitude 
+  private openStreetView() {
+    const position = {
+      lat: this.currentPlayer.location.latitude,
+      lng: this.currentPlayer.location.longitude
     };
-    if(this.panorama){
+    if (this.panorama) {
       this.panorama.setPosition(position);
     }
-    
+
   }
 }

@@ -3,6 +3,9 @@ import { tap} from  'rxjs/operators';
 import { Store } from 'rxjs-observable-store/lib/esm/store';
 import { GameProxy } from './game.proxy';
 import { GameState } from "./game.state";
+import { Observable } from 'rxjs';
+import { CurrentPlayerDTO } from './currentplayer.dto';
+import { CurrentGameDTO } from './currentgame.dto';
 
 
 @Injectable({ providedIn: 'root' })
@@ -36,17 +39,18 @@ export class GameStateStore extends Store<GameState> {
         })));
     }
 
-    play(gameId:string, playerId: string){
+    play(gameId:string, playerId: string) : Observable<CurrentGameDTO>{
         this.setState({
             ...this.state,
             gameId
         });
-        this.gameProxy.play(gameId, playerId).pipe(tap(res => {
+        return this.gameProxy.play(gameId, playerId).pipe(tap(res => {
             this.setState({
                 ...this.state,
                 player: res.currentPlayer
             });
-        })).subscribe();
+            this.listPlayers(this.state.gameId, this.state.player.id).subscribe();
+        }));
     }
 
     move(latitude: number, longitude: number){

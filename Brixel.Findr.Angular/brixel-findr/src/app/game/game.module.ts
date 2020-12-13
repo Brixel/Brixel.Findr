@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapViewComponent } from './components/map-view/map-view.component';
+import { GameRoutingModule } from './game-routing.module';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 
 
@@ -26,6 +28,7 @@ import { MapViewComponent } from './components/map-view/map-view.component';
     MapViewComponent],
   imports: [
     CommonModule,
+    GameRoutingModule,
     MatButtonModule,
     MatListModule,
     MatInputModule,
@@ -34,6 +37,9 @@ import { MapViewComponent } from './components/map-view/map-view.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ClipboardModule
   ]
 })
 export class GameModule { }
+
+
