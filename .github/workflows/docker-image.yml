@@ -1,0 +1,19 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the API Docker image
+      run: docker build . --file Brixel.Findr.API/Dockerfile --tag bwouters/findr-api:$(date +%s)
+    - uses: actions/checkout@v2
+    - name: Build the Webapp Docker image
+      run: docker build . --file Brixel.Findr.Angular/brixel-findr/Dockerfile --tag bwouters/findr-app:$(date +%s)
