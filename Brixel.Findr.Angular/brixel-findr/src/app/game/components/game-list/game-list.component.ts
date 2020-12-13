@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { GameStateStore } from 'src/app/shared/game.state.store';
-import { GameListDTO } from 'src/app/shared/gamelist.dto';
+import { GameStateStore } from '../../shared/game.state.store';
+import { GameListDTO } from '../../shared/gamelist.dto';
 
 @Component({
   selector: 'app-game-list',

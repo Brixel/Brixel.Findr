@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Loader } from '@googlemaps/js-api-loader';
-import { CurrentGameDTO } from "src/app/shared/currentgame.dto";
-import { GameStateStore } from 'src/app/shared/game.state.store';
-import { CurrentPlayerDTO } from "src/app/shared/currentplayer.dto";
+import { CurrentPlayerDTO } from '../../shared/currentplayer.dto';
+import { GameStateStore } from '../../shared/game.state.store';
 
 @Component({
   selector: 'app-map-view',

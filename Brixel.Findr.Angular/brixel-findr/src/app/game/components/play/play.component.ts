@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { GameStateStore } from 'src/app/shared/game.state.store';
+import { GameStateStore } from '../../shared/game.state.store';
 
 @Component({
   selector: 'app-play',

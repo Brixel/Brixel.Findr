@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PlayerDTO } from 'src/app/shared/player.dto';
+import { PlayerDTO } from '../../shared/player.dto';
 
 @Component({
   selector: 'app-players-overview',

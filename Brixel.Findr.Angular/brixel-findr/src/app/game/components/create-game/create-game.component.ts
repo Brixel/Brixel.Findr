@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameStateStore } from 'src/app/shared/game.state.store';
+import { GameStateStore } from '../../shared/game.state.store';
 
 @Component({
   selector: 'app-create-game',
