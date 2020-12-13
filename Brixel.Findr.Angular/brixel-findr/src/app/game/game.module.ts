@@ -7,7 +7,13 @@ import { GameListComponent } from './components/game-list/game-list.component';
 import { PlayersOverviewComponent } from './components/players-overview/players-overview.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MapViewComponent } from './components/map-view/map-view.component';
 
 
 
@@ -16,12 +22,18 @@ import { MatListModule } from '@angular/material/list';
     PlayComponent,
     CreateGameComponent,
     GameListComponent,
-    PlayersOverviewComponent],
+    PlayersOverviewComponent,
+    MapViewComponent],
   imports: [
     CommonModule,
     MatButtonModule,
     MatListModule,
     MatInputModule,
+    MatToolbarModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
   ]
 })
 export class GameModule { }

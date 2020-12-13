@@ -6,9 +6,6 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from  '@angular/material/list';
-import { MatInputModule } from  '@angular/material/input';
 import { GameModule } from './game/game.module';
 
 @NgModule({
@@ -18,10 +15,7 @@ import { GameModule } from './game/game.module';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
     GameModule
   ],
   providers: [],
