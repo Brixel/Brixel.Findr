@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CurrentGameDTO } from "./currentgame.dto";
-import { ApiService } from './api.service';
+import { ApiService } from '../../core/api.service';
 import { Observable } from 'rxjs';
 import { GameListDTO } from './gamelist.dto';
 import { MovePlayerRequestDTO } from "./moveplayerrequest.dto";
