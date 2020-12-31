@@ -16,7 +16,7 @@ export class ConfigurationService {
     loadConfiguration(){
         if(!this.configuration$){
             this.configuration$ = this.http.get<Configuration>(this.CONFIG_URL)
-                .pipe(shareReplay(1), tap((config => this.configuration = config)))
+                .pipe(tap((config => this.configuration = config)))
         }
         return this.configuration$;
     }
