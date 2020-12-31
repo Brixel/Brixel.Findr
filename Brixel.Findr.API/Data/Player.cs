@@ -20,12 +20,12 @@ namespace Brixel.Findr.API.Data
         {
             
         }
-        public static Player Create()
+        public static Player Create(Location location)
         {
             return new Player()
             {
                 Id = Guid.NewGuid(),
-                Location = new Location( 5.349982, 50.925948),
+                Location = location,
                 Color = GenerateRandomHexColor()
             };
         }
