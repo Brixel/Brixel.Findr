@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
 import { tap } from 'rxjs/operators';
+import { ConfigurationService } from 'src/app/modules/core/configuration.service';
 import { CurrentPlayerDTO } from '../../shared/currentplayer.dto';
 import { GameStateStore } from '../../shared/game.state.store';
 
@@ -15,9 +16,9 @@ export class MapViewComponent implements OnInit {
   loader: Loader;
   panorama: google.maps.StreetViewPanorama;
 
-  constructor(public gameStateStore: GameStateStore, private route: ActivatedRoute) {
+  constructor(public gameStateStore: GameStateStore, private route: ActivatedRoute, private configurationService: ConfigurationService) {
     this.loader = new Loader({
-      apiKey: "",
+      apiKey: this.configurationService.configuration.googleMapsKey,
       version: "weekly"
     });
 

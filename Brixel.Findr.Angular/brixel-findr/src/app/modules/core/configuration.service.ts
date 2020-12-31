@@ -22,6 +22,7 @@ export class ConfigurationService {
     }
 }
 
-export  interface Configuration{
+export interface Configuration{
     apiURL: string;
+    googleMapsKey: string;
 }
