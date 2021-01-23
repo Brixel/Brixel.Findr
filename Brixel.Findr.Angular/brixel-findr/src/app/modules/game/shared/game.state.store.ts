@@ -3,6 +3,7 @@ import { tap} from  'rxjs/operators';
 import { Store } from 'rxjs-observable-store/lib/esm/store';
 import { GameProxy } from './game.proxy';
 import { GameState } from "./game.state";
+import { GameClientService } from './gameclient.service';
 import { Observable } from 'rxjs';
 import { CurrentPlayerDTO } from './currentplayer.dto';
 import { CurrentGameDTO } from './currentgame.dto';
@@ -11,8 +12,13 @@ import { CurrentGameDTO } from './currentgame.dto';
 @Injectable({ providedIn: 'root' })
 export class GameStateStore extends Store<GameState> {
     
-    constructor(private gameProxy: GameProxy) {
+    constructor(private gameProxy: GameProxy, private GameClientService: GameClientService) {
         super(new GameState());        
+        this.GameClientService.playerMoved$.subscribe(() => {
+            if(this.state.gameId){
+                this.listPlayers(this.state.gameId, this.state.player.id).subscribe();
+            }
+        });
     }
 
     create(){
