@@ -3,9 +3,9 @@
     <app-create-game *ngIf="!gameStateStore.state.player"></app-create-game>
     <app-game-link  *ngIf="gameStateStore.state.player" [playerId]="gameStateStore.state.player.id" [gameId]="gameStateStore.state.gameId"></app-game-link>
 </mat-toolbar>
+<ng-container *ngIf="!gameStateStore.state.player">
+    
+<h2>How to play</h2>
+<p>When joining an existing game, you'll have to find the other players in that session. You can do this by navigating around in the game.</p>
+</ng-container>
 <router-outlet></router-outlet>
-
-<!--<app-play *ngIf="!gameStateStore.state.player" (playClicked)="onPlayClicked($event)"></app-play>
-<app-map-view *ngIf="gameStateStore.state.player" ></app-map-view>
-<app-players-overview *ngIf="gameStateStore.state.player" [gameId]="gameStateStore.state.gameId"
-    [players]="gameStateStore.state.players"></app-players-overview> -->

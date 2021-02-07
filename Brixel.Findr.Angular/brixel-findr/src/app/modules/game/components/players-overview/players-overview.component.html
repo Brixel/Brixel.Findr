@@ -1,7 +1,7 @@
+<h2>Other players</h2>
 <div class="content">
 <mat-card *ngFor="let player of players" class="outline" [ngStyle]="{'border-color': player.color }">
-  <mat-card-content
-    ><p *ngIf="player.isSelf">This is you!</p>
-    <p *ngIf="!player.isSelf">Other player is at {{ player.distance }}m</p></mat-card-content>
+  <mat-card-content>
+    <p>Other player is at {{ player.distance }}m</p></mat-card-content>
 </mat-card>
 </div>
