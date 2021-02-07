@@ -45,6 +45,7 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentPlayersDTO()
             {
                 GameId = game.Id,
+                GameState = game.GameState,
                 Players = game.Players.Where(x => x.Id != currentPlayerId).Select(p => new PlayerDTO()
                 {
                     Id = p.Id,
@@ -69,6 +70,7 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentGameDTO()
             {
                 Id = game.Id,
+                GameState = game.GameState,
                 CurrentPlayer = new DTO.CurrentPlayerDTO()
                 {
                     Id = player.Id,
@@ -92,6 +94,7 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentGameDTO()
             {
                 Id = game.Id,
+                GameState = game.GameState,
                 CurrentPlayer = new DTO.CurrentPlayerDTO()
                 {
                     Id = player.Id,
@@ -116,6 +119,7 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentGameDTO()
             {
                 Id = game.Id,
+                GameState = game.GameState,
                 CurrentPlayer = new DTO.CurrentPlayerDTO()
                 {
                     Id = player.Id,
@@ -145,6 +149,7 @@ namespace Brixel.Findr.API.Controllers
             return new CurrentGameDTO()
             {
                 Id = game.Id,
+                GameState = game.GameState,
                 CurrentPlayer = new DTO.CurrentPlayerDTO()
                 {
                     Id = player.Id,

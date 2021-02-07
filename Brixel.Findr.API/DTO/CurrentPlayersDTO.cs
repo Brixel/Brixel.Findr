@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Data;
 
     public class CurrentPlayersDTO
     {
@@ -12,5 +13,6 @@
             Players = new List<PlayerDTO>();
         }
         public IReadOnlyList<PlayerDTO> Players { get; set; }
+        public GameStates GameState { get; set; }
     }
-}
+}   

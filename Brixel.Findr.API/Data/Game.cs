@@ -25,6 +25,9 @@ namespace Brixel.Findr.API.Data
         [ProtoIgnore]
         public IReadOnlyList<Player> Players => _players;
 
+        [ProtoMember(5)]
+        public GameStates GameState { get; set; }
+
         private Game()
         {
             _players = new List<Player>();
@@ -35,7 +38,8 @@ namespace Brixel.Findr.API.Data
             {
                 Id = Guid.NewGuid(),
                 _center = new Location(5.349982, 50.925948),
-                _radiusInMeters = 200
+                _radiusInMeters = 200,
+                GameState = GameStates.InProgress
             };
             game.Join();
             return game;
@@ -70,8 +74,25 @@ namespace Brixel.Findr.API.Data
             var player = _players.SingleOrDefault(x => x.Id == playerId);
 
             player.MoveTo(latitude, longitude);
+
+            ValidateGame();
+
             return player;
         }
 
+        private void ValidateGame()
+        {
+            GameState = Players.All(x =>
+                Players.Where(player => player.Id != x.Id)
+                    .All(player => player.DistanceFrom(x.Location.Latitude, x.Location.Longitude) < 50))
+                ? GameStates.Finished
+                : GameStates.InProgress;
+        }
+    }
+
+    public enum GameStates
+    {
+        InProgress = 1,
+        Finished = 2
     }
 }

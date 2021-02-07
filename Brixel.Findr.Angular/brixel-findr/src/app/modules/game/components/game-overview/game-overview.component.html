@@ -1,4 +1,5 @@
-<mat-toolbar color="primary"><span>Findr</span>
+<mat-toolbar color="primary">
+    <span>Findr</span>
     <span class="example-spacer"></span>
     <app-create-game *ngIf="!gameStateStore.state.player"></app-create-game>
     <app-game-link  *ngIf="gameStateStore.state.player" [playerId]="gameStateStore.state.player.id" [gameId]="gameStateStore.state.gameId"></app-game-link>
