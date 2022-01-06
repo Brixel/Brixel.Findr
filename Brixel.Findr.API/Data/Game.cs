@@ -5,6 +5,8 @@ using ProtoBuf;
 
 namespace Brixel.Findr.API.Data
 {
+    using Geolocation;
+
     [ProtoContract]
     public class Game
     {
@@ -16,6 +18,13 @@ namespace Brixel.Findr.API.Data
 
         [ProtoMember(20)]
         private List<Player> _players;
+
+        [ProtoMember(3)]
+        private Location _center;
+
+        [ProtoMember(4)]
+        public double _radiusInMeters;
+
         [ProtoIgnore]
         public IReadOnlyList<Player> Players => _players;
 
@@ -29,7 +38,9 @@ namespace Brixel.Findr.API.Data
         {
             var game = new Game()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                _center = new Location(5.349982, 50.925948),
+                _radiusInMeters = 200
             };
             game.Join();
             return game;
@@ -41,6 +52,22 @@ namespace Brixel.Findr.API.Data
             var player = Player.Create(startLocation);
             _players.Add(player);
             return player;
+        }
+
+        private Location GetRandomLocation()
+        {
+            var boundaries = new CoordinateBoundaries(_center.Latitude, _center.Longitude, _radiusInMeters, DistanceUnit.Meters);
+
+            double minLatitude = boundaries.MinLatitude;
+            double maxLatitude = boundaries.MaxLatitude;
+            double minLongitude = boundaries.MinLongitude;
+            double maxLongitude = boundaries.MaxLongitude;
+
+            var random = new Random();
+            var latitude = random.NextDouble() * (maxLatitude - minLatitude) + maxLatitude;
+            var longitude = random.NextDouble() * (maxLongitude - minLongitude) + maxLongitude;
+
+            return new Location(longitude, latitude);
         }
 
         public Player MovePlayer(Guid playerId, in double latitude, in double longitude)

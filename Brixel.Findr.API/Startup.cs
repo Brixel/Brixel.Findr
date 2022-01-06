@@ -9,6 +9,8 @@ using Microsoft.OpenApi.Models;
 
 namespace Brixel.Findr.API
 {
+    using Infrastructure.Notifications;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -28,6 +30,8 @@ namespace Brixel.Findr.API
 
             services.AddScoped<IFileSystem, FileSystem>();
             services.AddScoped<IGameRepository, GameRepository>();
+
+            services.AddSignalR();
 
             services.AddSwaggerGen(options =>
             {
@@ -50,7 +54,7 @@ namespace Brixel.Findr.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -64,6 +68,7 @@ namespace Brixel.Findr.API
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<GameHub>("/hub");
                 endpoints.MapControllers();
             });
         }

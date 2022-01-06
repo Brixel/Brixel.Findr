@@ -8,15 +8,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Brixel.Findr.API.Controllers
 {
+    using Infrastructure.Notifications;
+    using Microsoft.AspNetCore.SignalR;
+
     [ApiController]
     [Route("games")]
     public class GameController : ControllerBase
     {
         private readonly IGameRepository _repository;
+        private readonly IHubContext<GameHub, IGameClient> _gameHubContext;
 
-        public GameController(IGameRepository repository)
+        public GameController(IGameRepository repository, IHubContext<GameHub, IGameClient> gameHubContext)
         {
             _repository = repository;
+            _gameHubContext = gameHubContext;
         }
 
         [HttpGet()]
@@ -133,6 +138,10 @@ namespace Brixel.Findr.API.Controllers
                 movePlayerRequest.Location.Longitude);
 
             await _repository.SaveAsync(game);
+
+            
+            await _gameHubContext.Clients.All.PlayerMoved(player.Id);
+
             return new CurrentGameDTO()
             {
                 Id = game.Id,
