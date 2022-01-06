@@ -1,7 +1,7 @@
 ### STAGE 1: Build ###
 
 # We label our stage as ‘builder’
-FROM node:latest as builder
+FROM node:lts-alpine as builder
 
 COPY package.json package-lock.json ./
 
