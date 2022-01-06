@@ -11,13 +11,18 @@ namespace Brixel.Findr.API.Data
         [ProtoMember(1)]
         public Guid Id { get; set; }
 
+        [ProtoMember(2)]
+        private GameZone _gameZone;
+
         [ProtoMember(20)]
         private List<Player> _players;
         [ProtoIgnore]
         public IReadOnlyList<Player> Players => _players;
 
+
         private Game()
         {
+            _gameZone = GameZone.Create();
             _players = new List<Player>();
         }
         public static Game Create()
@@ -32,7 +37,8 @@ namespace Brixel.Findr.API.Data
 
         public Player Join()
         {
-            var player = Player.Create();
+            var startLocation = _gameZone.GetRandomLocation();
+            var player = Player.Create(startLocation);
             _players.Add(player);
             return player;
         }

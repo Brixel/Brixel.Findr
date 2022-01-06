@@ -50,7 +50,7 @@ namespace Brixel.Findr.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors();
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
